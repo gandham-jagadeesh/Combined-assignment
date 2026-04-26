@@ -32,8 +32,7 @@ export async function likePost(userId: number, postId: number) {
 }
 
 export async function getFeed() {
-	const query = " select p.id as id ,p.content as content ,p.created_at as created_at ,u.username as username ,count(l.post_id) as like_count from users u join posts p on p.user_id = u.id left join likes l on l.post_id = p.id group by u.username,p.id";
-      	const res:QueryResult<Feed> = await client.query(query);
+	const query = " select p.id as id ,p.content as content ,p.created_at as created_at ,u.username as username ,count(l.post_id) as like_count from users u join posts p on p.user_id = u.id left join likes l on l.post_id = p.id group by u.username,p.id order by p.created_at";      	const res:QueryResult<Feed> = await client.query(query);
  const feed = res.rows;
  return feed;
 }
